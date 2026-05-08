@@ -93,7 +93,7 @@ export function CrudTable({ title, table, fields, listFields, orderBy }: Props) 
               <tr><td colSpan={cols.length + 1} className="p-6 text-center text-muted-foreground">Loading…</td></tr>
             ) : rows.length === 0 ? (
               <tr><td colSpan={cols.length + 1} className="p-6 text-center text-muted-foreground">No items yet</td></tr>
-            ) : rows.map((r) => (
+            ) : (rows as Array<Record<string, unknown>>).map((r) => (
               <tr key={r.id as string} className="border-t border-border">
                 {cols.map((c) => (
                   <td key={c} className="p-3 align-top max-w-xs truncate">
