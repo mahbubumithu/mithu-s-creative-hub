@@ -156,7 +156,7 @@ function CrudForm({ fields, initial, onSubmit, onCancel }: { fields: FieldDef[];
               placeholder={f.placeholder}
             />
           )}
-          {f.type === "image" && values[f.key] && <img src={values[f.key] as string} alt="" className="mt-2 h-16 w-16 object-contain rounded" />}
+          {f.type === "image" && !!values[f.key] && <img src={String(values[f.key])} alt="" className="mt-2 h-16 w-16 object-contain rounded" />}
         </div>
       ))}
       <DialogFooter>
