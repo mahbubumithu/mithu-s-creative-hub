@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase as supabaseTyped } from "@/integrations/supabase/client";
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const supabase = supabaseTyped as any;
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -95,7 +97,7 @@ export function CrudTable({ title, table, fields, listFields, orderBy }: Props) 
               <tr key={r.id as string} className="border-t border-border">
                 {cols.map((c) => (
                   <td key={c} className="p-3 align-top max-w-xs truncate">
-                    {renderCell(r[c])}
+                    {renderCell((r as Record<string, unknown>)[c])}
                   </td>
                 ))}
                 <td className="p-3 text-right">
@@ -111,7 +113,7 @@ export function CrudTable({ title, table, fields, listFields, orderBy }: Props) 
   );
 }
 
-function renderCell(v: unknown) {
+function renderCell(v: unknown): React.ReactNode {
   if (v === null || v === undefined) return "—";
   if (typeof v === "boolean") return v ? "✓" : "—";
   if (Array.isArray(v)) return v.join(", ");
