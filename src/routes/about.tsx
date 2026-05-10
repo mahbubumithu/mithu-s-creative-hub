@@ -36,8 +36,8 @@ function About() {
       </section>
 
       <Timeline icon={GraduationCap} title="Education" items={education.map((e) => ({ id: e.id, title: e.degree, sub: e.institution, time: e.year, desc: e.description }))} />
-      <Timeline icon={Briefcase} title="Experience" items={experience.map((e) => ({ id: e.id, title: e.title, sub: e.company, time: e.period, desc: e.description }))} />
       <Timeline icon={Award} title="Certifications" items={certs.map((e) => ({ id: e.id, title: e.name, sub: e.issuer, time: e.year, desc: "" }))} />
+      <Timeline icon={Briefcase} title="Experience" items={experience.map((e) => ({ id: e.id, title: e.title, sub: e.company, time: e.period, desc: e.description }))} />
     </SiteLayout>
   );
 }
