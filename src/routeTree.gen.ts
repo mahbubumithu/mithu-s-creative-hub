@@ -18,6 +18,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AdminIndexRouteImport } from './routes/admin.index'
 import { Route as BlogSlugRouteImport } from './routes/blog.$slug'
+import { Route as AdminLoginRouteImport } from './routes/admin_.login'
 import { Route as AdminToolsRouteImport } from './routes/admin.tools'
 import { Route as AdminTestimonialsRouteImport } from './routes/admin.testimonials'
 import { Route as AdminSkillsRouteImport } from './routes/admin.skills'
@@ -25,7 +26,6 @@ import { Route as AdminServicesRouteImport } from './routes/admin.services'
 import { Route as AdminProjectsRouteImport } from './routes/admin.projects'
 import { Route as AdminProfileRouteImport } from './routes/admin.profile'
 import { Route as AdminMessagesRouteImport } from './routes/admin.messages'
-import { Route as AdminLoginRouteImport } from './routes/admin.login'
 import { Route as AdminExperienceRouteImport } from './routes/admin.experience'
 import { Route as AdminEducationRouteImport } from './routes/admin.education'
 import { Route as AdminCertificationsRouteImport } from './routes/admin.certifications'
@@ -76,6 +76,11 @@ const BlogSlugRoute = BlogSlugRouteImport.update({
   path: '/$slug',
   getParentRoute: () => BlogRoute,
 } as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin_/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminToolsRoute = AdminToolsRouteImport.update({
   id: '/tools',
   path: '/tools',
@@ -111,11 +116,6 @@ const AdminMessagesRoute = AdminMessagesRouteImport.update({
   path: '/messages',
   getParentRoute: () => AdminRoute,
 } as any)
-const AdminLoginRoute = AdminLoginRouteImport.update({
-  id: '/login',
-  path: '/login',
-  getParentRoute: () => AdminRoute,
-} as any)
 const AdminExperienceRoute = AdminExperienceRouteImport.update({
   id: '/experience',
   path: '/experience',
@@ -149,7 +149,6 @@ export interface FileRoutesByFullPath {
   '/admin/certifications': typeof AdminCertificationsRoute
   '/admin/education': typeof AdminEducationRoute
   '/admin/experience': typeof AdminExperienceRoute
-  '/admin/login': typeof AdminLoginRoute
   '/admin/messages': typeof AdminMessagesRoute
   '/admin/profile': typeof AdminProfileRoute
   '/admin/projects': typeof AdminProjectsRoute
@@ -157,6 +156,7 @@ export interface FileRoutesByFullPath {
   '/admin/skills': typeof AdminSkillsRoute
   '/admin/testimonials': typeof AdminTestimonialsRoute
   '/admin/tools': typeof AdminToolsRoute
+  '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -171,7 +171,6 @@ export interface FileRoutesByTo {
   '/admin/certifications': typeof AdminCertificationsRoute
   '/admin/education': typeof AdminEducationRoute
   '/admin/experience': typeof AdminExperienceRoute
-  '/admin/login': typeof AdminLoginRoute
   '/admin/messages': typeof AdminMessagesRoute
   '/admin/profile': typeof AdminProfileRoute
   '/admin/projects': typeof AdminProjectsRoute
@@ -179,6 +178,7 @@ export interface FileRoutesByTo {
   '/admin/skills': typeof AdminSkillsRoute
   '/admin/testimonials': typeof AdminTestimonialsRoute
   '/admin/tools': typeof AdminToolsRoute
+  '/admin/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/admin': typeof AdminIndexRoute
 }
@@ -195,7 +195,6 @@ export interface FileRoutesById {
   '/admin/certifications': typeof AdminCertificationsRoute
   '/admin/education': typeof AdminEducationRoute
   '/admin/experience': typeof AdminExperienceRoute
-  '/admin/login': typeof AdminLoginRoute
   '/admin/messages': typeof AdminMessagesRoute
   '/admin/profile': typeof AdminProfileRoute
   '/admin/projects': typeof AdminProjectsRoute
@@ -203,6 +202,7 @@ export interface FileRoutesById {
   '/admin/skills': typeof AdminSkillsRoute
   '/admin/testimonials': typeof AdminTestimonialsRoute
   '/admin/tools': typeof AdminToolsRoute
+  '/admin_/login': typeof AdminLoginRoute
   '/blog/$slug': typeof BlogSlugRoute
   '/admin/': typeof AdminIndexRoute
 }
@@ -220,7 +220,6 @@ export interface FileRouteTypes {
     | '/admin/certifications'
     | '/admin/education'
     | '/admin/experience'
-    | '/admin/login'
     | '/admin/messages'
     | '/admin/profile'
     | '/admin/projects'
@@ -228,6 +227,7 @@ export interface FileRouteTypes {
     | '/admin/skills'
     | '/admin/testimonials'
     | '/admin/tools'
+    | '/admin/login'
     | '/blog/$slug'
     | '/admin/'
   fileRoutesByTo: FileRoutesByTo
@@ -242,7 +242,6 @@ export interface FileRouteTypes {
     | '/admin/certifications'
     | '/admin/education'
     | '/admin/experience'
-    | '/admin/login'
     | '/admin/messages'
     | '/admin/profile'
     | '/admin/projects'
@@ -250,6 +249,7 @@ export interface FileRouteTypes {
     | '/admin/skills'
     | '/admin/testimonials'
     | '/admin/tools'
+    | '/admin/login'
     | '/blog/$slug'
     | '/admin'
   id:
@@ -265,7 +265,6 @@ export interface FileRouteTypes {
     | '/admin/certifications'
     | '/admin/education'
     | '/admin/experience'
-    | '/admin/login'
     | '/admin/messages'
     | '/admin/profile'
     | '/admin/projects'
@@ -273,6 +272,7 @@ export interface FileRouteTypes {
     | '/admin/skills'
     | '/admin/testimonials'
     | '/admin/tools'
+    | '/admin_/login'
     | '/blog/$slug'
     | '/admin/'
   fileRoutesById: FileRoutesById
@@ -285,6 +285,7 @@ export interface RootRouteChildren {
   ContactRoute: typeof ContactRoute
   PortfolioRoute: typeof PortfolioRoute
   ServicesRoute: typeof ServicesRoute
+  AdminLoginRoute: typeof AdminLoginRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -352,6 +353,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BlogSlugRouteImport
       parentRoute: typeof BlogRoute
     }
+    '/admin_/login': {
+      id: '/admin_/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/tools': {
       id: '/admin/tools'
       path: '/tools'
@@ -401,13 +409,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminMessagesRouteImport
       parentRoute: typeof AdminRoute
     }
-    '/admin/login': {
-      id: '/admin/login'
-      path: '/login'
-      fullPath: '/admin/login'
-      preLoaderRoute: typeof AdminLoginRouteImport
-      parentRoute: typeof AdminRoute
-    }
     '/admin/experience': {
       id: '/admin/experience'
       path: '/experience'
@@ -444,7 +445,6 @@ interface AdminRouteChildren {
   AdminCertificationsRoute: typeof AdminCertificationsRoute
   AdminEducationRoute: typeof AdminEducationRoute
   AdminExperienceRoute: typeof AdminExperienceRoute
-  AdminLoginRoute: typeof AdminLoginRoute
   AdminMessagesRoute: typeof AdminMessagesRoute
   AdminProfileRoute: typeof AdminProfileRoute
   AdminProjectsRoute: typeof AdminProjectsRoute
@@ -460,7 +460,6 @@ const AdminRouteChildren: AdminRouteChildren = {
   AdminCertificationsRoute: AdminCertificationsRoute,
   AdminEducationRoute: AdminEducationRoute,
   AdminExperienceRoute: AdminExperienceRoute,
-  AdminLoginRoute: AdminLoginRoute,
   AdminMessagesRoute: AdminMessagesRoute,
   AdminProfileRoute: AdminProfileRoute,
   AdminProjectsRoute: AdminProjectsRoute,
@@ -491,6 +490,7 @@ const rootRouteChildren: RootRouteChildren = {
   ContactRoute: ContactRoute,
   PortfolioRoute: PortfolioRoute,
   ServicesRoute: ServicesRoute,
+  AdminLoginRoute: AdminLoginRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
